@@ -547,6 +547,6 @@
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
-    </script>
+</script>
 </body>
 </html>

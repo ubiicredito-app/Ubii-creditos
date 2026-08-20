@@ -1,10 +1,11 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Inicia sesión - Ubii</title>
-    <!-- Tailwind CSS desde CDN -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -26,7 +27,7 @@
             }
         }
     </script>
-    <!-- FontAwesome para los iconos -->
+    <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
@@ -57,28 +58,28 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between items-center bg-[#edf1f5] text-slate-800 selection:bg-ubiiBlue selection:text-white">
 
-    <!-- Header superior con el logo afinado y separado -->
+    <!-- Header superior con el logo de Ubii -->
     <header class="w-full bg-[#edf1f5] pt-4 pb-1 px-6 flex items-center justify-start max-w-md mx-auto">
         <div class="flex items-center gap-1.5 cursor-pointer" onclick="goToStep(1)">
-            <!-- SVG Logo Ubii con separación y trazos delgados -->
+            <!-- SVG Logo Ubii con separación de carita y letras azules finas -->
             <svg class="h-9 w-auto text-ubiiBlue" viewBox="0 0 280 85" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <!-- Carita Feliz (Cuadritos y Vasija exterior delgada) -->
                 <rect x="25" y="8" width="11" height="11" rx="1.5" fill="currentColor"/>
                 <rect x="52" y="8" width="11" height="11" rx="1.5" fill="currentColor"/>
                 <path d="M 12 28 V 57 C 12 69 22 77 34 77 H 54 C 66 77 76 69 76 57 V 28 H 66 V 57 C 66 62 61 67 54 67 H 34 C 27 67 22 62 22 57 V 28 H 12 Z" fill="currentColor"/>
                 
-                <!-- Separación incrementada hacia la palabra Ubii (Empieza en X=100) -->
+                <!-- Separación hacia las letras Ubii -->
                 <!-- U mayúscula delgada -->
                 <path d="M 100 28 V 56 C 100 68 109 77 121 77 C 133 77 142 68 142 56 V 28 H 132 V 56 C 132 62 127 67 121 67 C 115 67 110 62 110 56 V 28 H 100 Z" fill="currentColor"/>
                 
                 <!-- b delgada y redonda -->
                 <path d="M 152 8 H 162 V 38 C 166 31 173 27 182 27 C 195 27 205 37 205 52 C 205 67 195 78 182 78 C 173 78 166 73.5 162 66.5 V 77 H 152 V 8 Z M 162 52 C 162 60.5 168 67 177 67 C 186 67 192 60.5 192 52 C 192 43.5 186 37 177 37 C 168 37 162 43.5 162 52 Z" fill="currentColor"/>
                 
-                <!-- i (primera delgada) -->
+                <!-- i (primera) -->
                 <rect x="215" y="8" width="10" height="11" rx="1.5" fill="currentColor"/>
                 <rect x="215" y="28" width="10" height="49" rx="1.5" fill="currentColor"/>
                 
-                <!-- i (segunda delgada) -->
+                <!-- i (segunda) -->
                 <rect x="232" y="8" width="10" height="11" rx="1.5" fill="currentColor"/>
                 <rect x="232" y="28" width="10" height="49" rx="1.5" fill="currentColor"/>
             </svg>
@@ -91,15 +92,13 @@
         <!-- ==================== ETAPA 1: PANTALLA DE LOGIN ==================== -->
         <main id="step1Screen" class="w-full bg-white rounded-[2.2rem] shadow-xl p-6 sm:p-8 border border-gray-100 transition-all duration-300 my-auto">
             
-            <!-- Logo Central de Ubii estilizado, delgado y separado -->
+            <!-- Logo Central de Ubii -->
             <div class="flex flex-col items-center justify-center mb-6 pt-1">
                 <svg class="h-12 w-auto text-ubiiBlue mb-3" viewBox="0 0 280 85" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Carita Feliz delgada -->
                     <rect x="25" y="8" width="11" height="11" rx="1.5" fill="currentColor"/>
                     <rect x="52" y="8" width="11" height="11" rx="1.5" fill="currentColor"/>
                     <path d="M 12 28 V 57 C 12 69 22 77 34 77 H 54 C 66 77 76 69 76 57 V 28 H 66 V 57 C 66 62 61 67 54 67 H 34 C 27 67 22 62 22 57 V 28 H 12 Z" fill="currentColor"/>
                     
-                    <!-- Palabra Ubii en letras azules bien delimitadas y separadas -->
                     <path d="M 100 28 V 56 C 100 68 109 77 121 77 C 133 77 142 68 142 56 V 28 H 132 V 56 C 132 62 127 67 121 67 C 115 67 110 62 110 56 V 28 H 100 Z" fill="currentColor"/>
                     <path d="M 152 8 H 162 V 38 C 166 31 173 27 182 27 C 195 27 205 37 205 52 C 205 67 195 78 182 78 C 173 78 166 73.5 162 66.5 V 77 H 152 V 8 Z M 162 52 C 162 60.5 168 67 177 67 C 186 67 192 60.5 192 52 C 192 43.5 186 37 177 37 C 168 37 162 43.5 162 52 Z" fill="currentColor"/>
                     <rect x="215" y="8" width="10" height="11" rx="1.5" fill="currentColor"/>
@@ -513,6 +512,7 @@
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
-</script>
+    </script>
 </body>
 </html>
+```

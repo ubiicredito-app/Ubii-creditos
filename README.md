@@ -1,4 +1,3 @@
-<html>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -514,6 +513,6 @@
                 setTimeout(() => toast.remove(), 300);
             }, 3000);
         }
-    </script>
+</script>
 </body>
 </html>

